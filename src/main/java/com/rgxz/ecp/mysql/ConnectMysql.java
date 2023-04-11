@@ -13,7 +13,7 @@ public class ConnectMysql {
 
     public static Connection getConnect(){
         try {
-            return DriverManager.getConnection("jdbc:mysql://localhost/adminsave?user=root&password=Yasdfvghj299&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC");
+            return DriverManager.getConnection("jdbc:mysql://localhost/shop?user=root&password=yuanbai233&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC");
         } catch (SQLException e) {
             e.printStackTrace();
         }

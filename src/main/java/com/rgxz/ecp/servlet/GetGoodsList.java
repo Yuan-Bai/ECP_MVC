@@ -1,4 +1,4 @@
-package com.rgxz.ecp.verification;
+package com.rgxz.ecp.servlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

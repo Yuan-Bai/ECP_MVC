@@ -6,5 +6,5 @@ public interface IGoodsDao {
     boolean add(Goods goods);
     boolean delete(Goods goods);
     boolean update(Goods goods);
-    Goods find(String userAccount, String pwd);
+    Goods find(String goodsName, String businessName);
 }
