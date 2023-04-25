@@ -101,6 +101,7 @@ public class SupplyDaoImpl implements ISupplyDao {
 
     @Override
     public Supply findGoods() {
+        // todo 随机不重复查询
         String sqlFind = "select * from supply where id = ?";
         Connection connection = ConnectMysql.getConnect();
         PreparedStatement ps = null;

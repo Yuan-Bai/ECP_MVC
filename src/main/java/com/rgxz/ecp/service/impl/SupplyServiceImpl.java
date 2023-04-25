@@ -1,14 +1,10 @@
 package com.rgxz.ecp.service.impl;
 
-import com.alibaba.fastjson2.JSONArray;
-import com.alibaba.fastjson2.JSONObject;
+import com.rgxz.ecp.common.Result;
 import com.rgxz.ecp.entity.Supply;
 import com.rgxz.ecp.service.ISupplyService;
 import com.rgxz.ecp.dao.Impl.SupplyDaoImpl;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class SupplyServiceImpl implements ISupplyService {
     @Override
@@ -23,24 +19,21 @@ public class SupplyServiceImpl implements ISupplyService {
         return null;
     }
 
+
     @Override
-    public JSONObject findGoods(String goods_name) {
+    public Result<ArrayList<Supply>> findGoodsByName(String goods_name) {
         SupplyDaoImpl supplyDao = new SupplyDaoImpl();
         ArrayList<Supply> supplyArrayList = supplyDao.findGoods(goods_name);
-        Map<String, Supply> map = new HashMap<>();
-        for (int i = 0; i < supplyArrayList.size(); i++) {
-            map.put(String.valueOf(i), supplyArrayList.get(i));
-        }
-        return new JSONObject(map);
+        return Result.success(supplyArrayList);
     }
 
     @Override
-    public JSONObject findRandomGoods() {
+    public Result<ArrayList<Supply>> getRandomGoodsList(int nums) {
         SupplyDaoImpl supplyDao = new SupplyDaoImpl();
-        Map<String, Supply> map = new HashMap<>();
+        ArrayList<Supply> supplyArrayList = new ArrayList<>();
         for (int i=0;i<24;i++){
-            map.put(String.valueOf(i), supplyDao.findGoods());
+            supplyArrayList.add(supplyDao.findGoods());
         }
-        return new JSONObject(map);
+        return Result.success(supplyArrayList);
     }
 }

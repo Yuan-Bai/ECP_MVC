@@ -5,8 +5,8 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
   <servlet>
-    <servlet-name>GetGoodsList</servlet-name>
-    <servlet-class>com.rgxz.ecp.servlet.GetGoodsList</servlet-class>
+    <servlet-name>UpLoadGoods</servlet-name>
+    <servlet-class>com.rgxz.ecp.servlet.UpLoadGoods</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>LoginServlet</servlet-name>
@@ -20,9 +20,13 @@
     <servlet-name>GetRGServlet</servlet-name>
     <servlet-class>com.rgxz.ecp.servlet.GetRGServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>BecomeBusiness</servlet-name>
+    <servlet-class>com.rgxz.ecp.servlet.BecomeBusiness</servlet-class>
+  </servlet>
   <servlet-mapping>
-    <servlet-name>GetGoodsList</servlet-name>
-    <url-pattern>/getgoodslist</url-pattern>
+    <servlet-name>UpLoadGoods</servlet-name>
+    <url-pattern>/upLoadGoods</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
@@ -35,5 +39,9 @@
   <servlet-mapping>
     <servlet-name>GetRGServlet</servlet-name>
     <url-pattern>/randomGoods</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>BecomeBusiness</servlet-name>
+    <url-pattern>/becomeBusiness</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -1,11 +1,12 @@
 package com.rgxz.ecp.service.impl;
-import com.alibaba.fastjson2.JSONObject;
+import com.rgxz.ecp.common.CodeMsg;
+import com.rgxz.ecp.common.Result;
+import com.rgxz.ecp.dao.Impl.BusinessDaoImpl;
 import com.rgxz.ecp.dao.Impl.UserDaoImpl;
+import com.rgxz.ecp.entity.Business;
 import com.rgxz.ecp.entity.User;
 import com.rgxz.ecp.service.IUserService;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class UserServiceImpl implements IUserService {
     @Override
@@ -29,37 +30,38 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Boolean register(String name, String pwd) {
+    public Result<String> register(String name, String pwd, String ip) {
         UserDaoImpl userDao = new UserDaoImpl();
-        User user = new User(name, pwd);
-        return userDao.add(user);
+        User user = new User(name, pwd, ip);
+        if (userDao.add(user))
+            return Result.success();
+        else
+            return Result.error(CodeMsg.REGISTER_USER_ERROR);
     }
 
     @Override
-    public JSONObject login(String name, String pwd) {
+    public Result<User> login(String name, String pwd, String ip) {
         UserDaoImpl userDao = new UserDaoImpl();
         User user = userDao.findUser(name);
-        Map<String, String> map = new HashMap<>();
-        String isLogin = "fail";
-        if (user.getPwd().equals(pwd))
-            isLogin = "success";
-        map.put("is_login", isLogin);
-        map.put("user", user.toString());
-//        map.put("id", user.getId().toString());
-//        map.put("name", user.getName());
-//        map.put("address", user.getAddress());
-//        map.put("phone", user.getPhone());
-//        map.put("balance", user.getBalance().toString());
-//        map.put("gender", user.getGender());
-//        map.put("image_url", user.getImage_url());
-//        map.put("identity", user.getIdentity().toString());
-//        map.put("business_id", user.getBusiness_id().toString());
-//        map.put("create_time", user.getCreate_time().toString());
-        return new JSONObject(map);
+        if (user == null || !user.getPwd().equals(pwd)) return Result.error(CodeMsg.USER_OR_PASS_ERROR);
+        BusinessServiceImpl businessService = new BusinessServiceImpl();
+        user.setBusiness(businessService.getBusiness(user.getId()).getData());
+        return Result.success(user);
     }
 
     @Override
-    public Boolean becomeBusiness(String name, String pwd) {
-        return null;
+    public Result<Business> becomeBusiness(String user_name, String user_pwd, String business_name, String business_address, String business_phone, String image_url) {
+        UserDaoImpl userDao = new UserDaoImpl();
+        User user = userDao.findUser(user_name);
+        if (user.getPwd().equals(user_pwd)){
+            Integer user_id = userDao.findId(user_name);
+            BusinessDaoImpl businessDao = new BusinessDaoImpl();
+            Business business = new Business(user_id, business_name, business_address, business_phone, image_url);
+            // 如果注册商家失败返回注册商家失败的错误信息
+            if (!businessDao.add(business)) return Result.error(CodeMsg.BECOME_BUSINESS_ERROR);
+            if (!userDao.updateIsBusiness(user.getId(), true)) return Result.error(CodeMsg.SERVER_EXCEPTION);
+            return Result.success(businessDao.findByUserId(user_id));
+        }
+        return Result.error(CodeMsg.USER_OR_PASS_ERROR);
     }
 }

@@ -1,5 +1,6 @@
 package com.rgxz.test;
 
+import com.rgxz.ecp.common.Result;
 import com.rgxz.ecp.dao.Impl.GoodsDaoImpl;
 import com.rgxz.ecp.dao.Impl.UserDaoImpl;
 import com.rgxz.ecp.entity.Goods;
@@ -7,15 +8,15 @@ import com.rgxz.ecp.entity.User;
 import org.junit.Test;
 
 import java.sql.Date;
+import java.util.Map;
 
 
 public class IocTest {
     @Test
     public void test01(){
-        GoodsDaoImpl goodsDao = new GoodsDaoImpl();
-        Date date = new Date(new java.util.Date().getTime());
-        Goods goods = new Goods("redmi k50u", "小米京东自营旗舰店", "手机", "骁龙8+旗舰处理器 12GB+256GB", date, "k50u.jpg", 100, 2599);
-        System.out.println(goodsDao.add(goods));
+//        User user = new User("2020117163", "123456879", "12312");
+//        Result<User> result = Result.success(user);
+//        System.out.println(result.toJSON().toJSONString());
     }
 
     @Test

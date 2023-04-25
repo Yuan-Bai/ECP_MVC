@@ -6,5 +6,6 @@ public interface IBusinessDao {
     boolean add(Business business);
     boolean delete(Business business);
     boolean update(Business business);
-    Business find(String businessName);
+    Business findByName(String businessName);
+    Business findByUserId(int user_id);
 }
